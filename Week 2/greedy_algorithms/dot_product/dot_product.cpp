@@ -3,12 +3,18 @@
 #include <vector>
 
 using std::vector;
+typedef std::vector<int> vi;
+typedef long long int lli;
 
-long long max_dot_product(vector<int> a, vector<int> b) {
+lli max_dot_product(vi a, vi b) {
   // write your code here
-  long long result = 0;
-  for (size_t i = 0; i < a.size(); i++) {
-    result += ((long long) a[i]) * b[i];
+  sort(a.begin(), a.end());
+  sort(b.begin(), b.end());
+  lli result = 0;
+
+
+  for( int i = 0; i < a.size(); ++i){
+    result += (lli) a[i] * (lli) b[i];
   }
   return result;
 }
@@ -16,7 +22,7 @@ long long max_dot_product(vector<int> a, vector<int> b) {
 int main() {
   size_t n;
   std::cin >> n;
-  vector<int> a(n), b(n);
+  vi a(n), b(n);
   for (size_t i = 0; i < n; i++) {
     std::cin >> a[i];
   }
