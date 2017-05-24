@@ -5,7 +5,9 @@
 using std::vector;
 using std::swap;
 
-int partition2(vector<int> &a, int l, int r) {
+typedef std::vector<int> vi;
+
+int partition2(vi &a, int l, int r) {
   int x = a[l];
   int j = l;
   for (int i = l + 1; i <= r; i++) {
@@ -18,23 +20,51 @@ int partition2(vector<int> &a, int l, int r) {
   return j;
 }
 
-void randomized_quick_sort(vector<int> &a, int l, int r) {
+void partition3(vi &a, int low, int high, int &i, int &j){
+  if (high - low <= 1)
+  {
+    if (a[high] < a[low])
+      swap(a[high], a[low]);
+    i = low;
+    j = high;
+    return;
+  }
+
+  int mid = low;
+  int pivot = a[high];
+  while (mid <= high)
+  {
+    if (a[mid]<pivot)
+        swap(a[low++], a[mid++]);
+    else if (a[mid]==pivot)
+        mid++;
+    else if (a[mid]>pivot)
+        swap(a[mid], a[high--]);
+  }
+    //update i and j
+    i = low-1;
+    j = mid; //or high-1
+
+}
+
+void randomized_quick_sort(vi &a, int l, int r) {
   if (l >= r) {
     return;
   }
 
   int k = l + rand() % (r - l + 1);
   swap(a[l], a[k]);
-  int m = partition2(a, l, r);
+  int i,j;
+  partition3(a, l, r, i, j);
 
-  randomized_quick_sort(a, l, m - 1);
-  randomized_quick_sort(a, m + 1, r);
+  randomized_quick_sort(a, l, i);
+  randomized_quick_sort(a, j, r);
 }
 
 int main() {
   int n;
   std::cin >> n;
-  vector<int> a(n);
+  vi a(n);
   for (size_t i = 0; i < a.size(); ++i) {
     std::cin >> a[i];
   }
